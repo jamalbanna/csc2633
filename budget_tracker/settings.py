@@ -26,7 +26,13 @@ SECRET_KEY = 'django-insecure-vunho8^zp^+oz!!3nayk-938-^t(ktt5)b$e%re=01ix$5!*9_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+import os
+
+ALLOWED_HOSTS = ['.railway.app', '127.0.0.1', 'localhost']
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.railway.app',
+]
+
 
 
 # Application definition
@@ -81,11 +87,14 @@ WSGI_APPLICATION = 'budget_tracker.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
